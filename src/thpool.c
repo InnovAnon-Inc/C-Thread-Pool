@@ -318,7 +318,7 @@ static int thread_init (thpool_* thpool_p, struct thread** thread_p, int id){
 	(*thread_p)->thpool_p = thpool_p;
 	(*thread_p)->id       = id;
 
-	if (pthread_create(&(*thread_p)->pthread, NULL, (void *)thread_do, (*thread_p)) != 0)
+	if (pthread_create(&(*thread_p)->pthread, NULL, (void *(*) (void *))thread_do, (*thread_p)) != 0)
 		return -2;
 	if (pthread_detach((*thread_p)->pthread) != 0)
 		return -3;
