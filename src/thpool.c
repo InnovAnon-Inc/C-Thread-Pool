@@ -96,7 +96,7 @@ typedef struct thpool_{
 static int  thread_init(thpool_* thpool_p, struct thread** thread_p, int id);
 static void* thread_do(struct thread* thread_p);
 static int  thread_hold(int sig_id);
-static int  thread_destroy(struct thread* thread_p);
+static void  thread_destroy(struct thread* thread_p);
 
 static int   jobqueue_init(jobqueue* jobqueue_p);
 static int  jobqueue_clear(jobqueue* jobqueue_p);
@@ -344,7 +344,8 @@ static void* thread_do(struct thread* thread_p){
 
 	/* Set thread name for profiling and debuging */
 	char thread_name[128] = {0};
-	if (snprintf(thread_name, sizeof (thread_name) - 1, "thread-pool-%d", thread_p->id) >= sizeof (thread_name))
+	int err = snprintf(thread_name, sizeof (thread_name) - 1, "thread-pool-%d", thread_p->id);
+	if (err < 0 || err >= sizeof (thread_name))
 		return NULL;
 
 #if defined(__linux__)
