@@ -134,7 +134,7 @@ int thpool_pause(threadpool);
  * @param threadpool     the threadpool where the threads should be unpaused
  * @return nothing
  */
-void thpool_resume(threadpool);
+int thpool_resume(threadpool);
 
 
 /**
