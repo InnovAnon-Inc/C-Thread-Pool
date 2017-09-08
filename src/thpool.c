@@ -95,7 +95,7 @@ typedef struct thpool_{
 
 static int  thread_init(thpool_* thpool_p, struct thread** thread_p, int id);
 static void* thread_do(struct thread* thread_p);
-static int  thread_hold(int sig_id);
+static void  thread_hold(int sig_id);
 static void  thread_destroy(struct thread* thread_p);
 
 static int   jobqueue_init(jobqueue* jobqueue_p);
@@ -256,7 +256,7 @@ int thpool_destroy(thpool_* thpool_p){
 	/* Deallocs */
 	int n;
 	for (n=0; n < threads_total; n++){
-		if (thread_destroy(thpool_p->threads[n]) != 0) return -6;
+		thread_destroy(thpool_p->threads[n]);
 	}
 	free(thpool_p->threads);
 	free(thpool_p);
