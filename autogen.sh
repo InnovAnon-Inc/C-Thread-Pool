@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 set -exo nounset
 
 if [ $# -ne 0 ] ; then
@@ -12,7 +12,7 @@ autoreconf --install
 if [ $# -eq 0 ] ; then exit 0
 else
 	test "x$1" == xmake
-	./configure
+	./configure --prefix=$HOME
 	make
 	make install
 fi
