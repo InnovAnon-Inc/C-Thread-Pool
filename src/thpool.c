@@ -165,7 +165,7 @@ struct thpool_* thpool_init(int num_threads){
 		free(thpool_p);
 		return NULL;
 	}*/
-	thpool_p->threads_all_idle = PTHREAD_COND_INITIALIZER;
+	thpool_p->threads_all_idle = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
 
 	/* Thread init */
 	int n;
@@ -345,7 +345,7 @@ static void* thread_do(struct thread* thread_p){
 	/* Set thread name for profiling and debuging */
 	char thread_name[128] = {0};
 	int err = snprintf(thread_name, sizeof (thread_name) - 1, "thread-pool-%d", thread_p->id);
-	if (err < 0 || err >= sizeof (thread_name))
+	if (err < 0 || (unsigned int) err >= sizeof (thread_name))
 		return NULL;
 
 #if defined(__linux__)
@@ -544,12 +544,12 @@ static int bsem_init(bsem *bsem_p, int value) {
 		return -1;
 	}
 	/*if (pthread_mutex_init(&(bsem_p->mutex), NULL) != 0) return -2;*/
-	bsem_p->mutex = PTHREAD_MUTEX_INITIALIZER;
+	bsem_p->mutex = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
 	/*if (pthread_cond_init(&(bsem_p->cond), NULL) != 0) {
 		pthread_mutex_destroy (&(bsem_p->mutex));
 		return -3;
 	}*/
-	bsem_p->cond = PTHREAD_COND_INITIALIZER;
+	bsem_p->cond = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
 	bsem_p->v = value;
 	return 0;
 }
