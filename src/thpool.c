@@ -158,7 +158,7 @@ struct thpool_* thpool_init(int num_threads){
 		free(thpool_p);
 		return NULL;
 	}*/
-	thpool_p->thcount_lock = PTHREAD_MUTEX_INITIALIZER;
+	thpool_p->thcount_lock = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
 	/*if (pthread_cond_init(&thpool_p->threads_all_idle, NULL) != 0) {
 		pthread_mutex_destroy (&(thpool_p->thcount_lock));
 		jobqueue_destroy(&thpool_p->jobqueue);
@@ -173,7 +173,7 @@ struct thpool_* thpool_init(int num_threads){
 		if (thread_init(thpool_p, &thpool_p->threads[n], n) != 0) {
 			int k;
 			for (k = 0; k < n; k++)
-				thread_destroy (&thpool_p->threads[k]);
+				thread_destroy (thpool_p->threads[k]);
 			pthread_cond_destroy (&thpool_p->threads_all_idle);
 			pthread_mutex_destroy (&(thpool_p->thcount_lock));
 			jobqueue_destroy(&thpool_p->jobqueue);
@@ -241,7 +241,7 @@ int thpool_destroy(thpool_* thpool_p){
 	if (time (&start) == (time_t) -1) return -1;
 	while (tpassed < TIMEOUT && thpool_p->num_threads_alive){
 		if (bsem_post_all(thpool_p->jobqueue.has_jobs) != 0) return -2;
-		if (time (&end) == (time_t -1)) return -3;
+		if (time (&end) == (time_t) -1) return -3;
 		tpassed = difftime(end,start);
 	}
 
