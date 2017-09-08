@@ -119,6 +119,8 @@ static int  bsem_wait(struct bsem *bsem_p);
 
 /* Initialise thread pool */
 struct thpool_* thpool_init(int num_threads){
+	thpool_* thpool_p;
+	int n;
 
 	threads_on_hold   = 0;
 	threads_keepalive = 1;
@@ -128,7 +130,6 @@ struct thpool_* thpool_init(int num_threads){
 	}
 
 	/* Make new thread pool */
-	thpool_* thpool_p;
 	thpool_p = (struct thpool_*)malloc(sizeof(struct thpool_));
 	if (thpool_p == NULL){
 		err("thpool_init(): Could not allocate memory for thread pool\n");
@@ -168,7 +169,6 @@ struct thpool_* thpool_init(int num_threads){
 	thpool_p->threads_all_idle = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
 
 	/* Thread init */
-	int n;
 	for (n=0; n<num_threads; n++){
 		if (thread_init(thpool_p, &thpool_p->threads[n], n) != 0) {
 			int k;
@@ -226,18 +226,23 @@ int thpool_wait(thpool_* thpool_p){
 
 /* Destroy the threadpool */
 int thpool_destroy(thpool_* thpool_p){
+	volatile int threads_total;
+
+	double TIMEOUT = 1.0;
+	time_t start, end;
+	double tpassed = 0.0;
+
+	int n;
+
 	/* No need to destory if it's NULL */
 	if (thpool_p == NULL) return 0;
 
-	volatile int threads_total = thpool_p->num_threads_alive;
+	threads_total = thpool_p->num_threads_alive;
 
 	/* End each thread 's infinite loop */
 	threads_keepalive = 0;
 
 	/* Give one second to kill idle threads */
-	double TIMEOUT = 1.0;
-	time_t start, end;
-	double tpassed = 0.0;
 	if (time (&start) == (time_t) -1) return -1;
 	while (tpassed < TIMEOUT && thpool_p->num_threads_alive){
 		if (bsem_post_all(thpool_p->jobqueue.has_jobs) != 0) return -2;
@@ -254,7 +259,6 @@ int thpool_destroy(thpool_* thpool_p){
 	/* Job queue cleanup */
 	if (jobqueue_destroy(&thpool_p->jobqueue) != 0) return -5;
 	/* Deallocs */
-	int n;
 	for (n=0; n < threads_total; n++){
 		thread_destroy(thpool_p->threads[n]);
 	}
@@ -345,6 +349,8 @@ static void* thread_do(struct thread* thread_p){
 	/* Set thread name for profiling and debuging */
 	char thread_name[128] = {0};
 	int err = snprintf(thread_name, sizeof (thread_name) - 1, "thread-pool-%d", thread_p->id);
+	thpool_* thpool_p;
+	struct sigaction act;
 	if (err < 0 || (unsigned int) err >= sizeof (thread_name))
 		return NULL;
 
@@ -358,10 +364,9 @@ static void* thread_do(struct thread* thread_p){
 #endif
 
 	/* Assure all threads have been created before starting serving */
-	thpool_* thpool_p = thread_p->thpool_p;
+	thpool_p = thread_p->thpool_p;
 
 	/* Register signal handler */
-	struct sigaction act;
 	if (sigemptyset(&act.sa_mask) != 0) return NULL;
 	act.sa_flags = 0;
 	act.sa_handler = thread_hold;
@@ -379,15 +384,16 @@ static void* thread_do(struct thread* thread_p){
 		if (bsem_wait(thpool_p->jobqueue.has_jobs) != 0) return NULL;
 
 		if (threads_keepalive){
+			void (*func_buff)(void*);
+			void*  arg_buff;
+			job* job_p;
 
 			if (pthread_mutex_lock(&thpool_p->thcount_lock) != 0) return NULL;
 			thpool_p->num_threads_working++;
 			if (pthread_mutex_unlock(&thpool_p->thcount_lock) != 0) return NULL;
 
 			/* Read job from queue and execute it */
-			void (*func_buff)(void*);
-			void*  arg_buff;
-			job* job_p = jobqueue_pull(&thpool_p->jobqueue);
+			job_p = jobqueue_pull(&thpool_p->jobqueue);
 			if (job_p) {
 				func_buff = job_p->function;
 				arg_buff  = job_p->arg;
@@ -494,9 +500,10 @@ static int jobqueue_push(jobqueue* jobqueue_p, struct job* newjob){
 >>>>>>> da2c0fe45e43ce0937f272c8cd2704bdc0afb490
  */
 static struct job* jobqueue_pull(jobqueue* jobqueue_p){
+	job* job_p;
 
 	if (pthread_mutex_lock(&jobqueue_p->rwmutex) != 0) return NULL;
-	job* job_p = jobqueue_p->front;
+	job_p = jobqueue_p->front;
 
 	switch(jobqueue_p->len){
 
