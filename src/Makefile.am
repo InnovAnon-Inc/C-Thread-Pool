@@ -18,5 +18,5 @@ libthpool_la_CFLAGS = -Wextra -pedantic -ansi -Werror -Wdouble-promotion \
                    -Wmissing-prototypes -Wmissing-declarations -Wpacked \
                    -Wredundant-decls -Wnested-externs -Winline \
                    -Wvector-operation-performance -Wdisabled-optimization \
-                   -Wstack-protector -Wunsuffixed-float-constants \
+                   -Wstack-protector \
                    -Winit-self
