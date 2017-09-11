@@ -47,12 +47,15 @@ static volatile int threads_on_hold;
 /* ========================== STRUCTURES ============================ */
 
 
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wpadded"
 /* Binary semaphore */
 typedef struct bsem {
 	pthread_mutex_t mutex;
 	pthread_cond_t   cond;
 	int v;
 } bsem;
+	#pragma GCC diagnostic pop
 
 
 /* Job */
@@ -63,6 +66,8 @@ typedef struct job{
 } job;
 
 
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wpadded"
 /* Job queue */
 typedef struct jobqueue{
 	pthread_mutex_t rwmutex;             /* used for queue r/w access */
@@ -71,14 +76,18 @@ typedef struct jobqueue{
 	bsem *has_jobs;                      /* flag as binary semaphore  */
 	int   len;                           /* number of jobs in queue   */
 } jobqueue;
+	#pragma GCC diagnostic pop
 
 
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wpadded"
 /* Thread */
 typedef struct thread{
 	int       id;                        /* friendly id               */
 	pthread_t pthread;                   /* pointer to actual thread  */
 	struct thpool_* thpool_p;            /* access to thpool          */
 } thread;
+	#pragma GCC diagnostic pop
 
 
 /* Threadpool */
@@ -280,9 +289,12 @@ __attribute__ ((nonnull (1), nothrow, warn_unused_result))
 int thpool_destroy(thpool_* thpool_p){
 	volatile int threads_total;
 
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wunsuffixed-float-constant"
 	double TIMEOUT = 1.0;
 	time_t start, end;
 	double tpassed = 0.0;
+	#pragma GCC diagnostic pop
 
 	int n;
 
