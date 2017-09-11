@@ -36,7 +36,8 @@ typedef struct thpool_* threadpool;
  * @return threadpool    created threadpool on success,
  *                       NULL on error
  */
-threadpool thpool_init(int num_threads);
+threadpool thpool_init(int num_threads)
+__attribute__ ((malloc, warn_unused_result)) ;
 
 
 /**
@@ -66,7 +67,8 @@ threadpool thpool_init(int num_threads);
  * @param  arg_p         pointer to an argument
  * @return 0 on successs, -1 otherwise.
  */
-int thpool_add_work(threadpool, void (*function_p)(void*), void* arg_p);
+int thpool_add_work(threadpool, void (*function_p)(void*), void* arg_p)
+__attribute__ ((nonnull (1, 2), warn_unused_result)) ;
 
 
 /**
@@ -96,7 +98,8 @@ int thpool_add_work(threadpool, void (*function_p)(void*), void* arg_p);
  * @param threadpool     the threadpool to wait for
  * @return nothing
  */
-int thpool_wait(threadpool);
+int thpool_wait(threadpool)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 /**
@@ -120,7 +123,8 @@ int thpool_wait(threadpool);
  * @param threadpool    the threadpool where the threads should be paused
  * @return nothing
  */
-int thpool_pause(threadpool);
+int thpool_pause(threadpool)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 /**
@@ -136,7 +140,8 @@ int thpool_pause(threadpool);
  * @param threadpool     the threadpool where the threads should be unpaused
  * @return nothing
  */
-void thpool_resume(threadpool);
+void thpool_resume(threadpool)
+__attribute__ ((nonnull (1))) ;
 
 
 /**
@@ -158,7 +163,8 @@ void thpool_resume(threadpool);
  * @param threadpool     the threadpool to destroy
  * @return nothing
  */
-int thpool_destroy(threadpool);
+int thpool_destroy(threadpool)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 /**
@@ -179,7 +185,8 @@ int thpool_destroy(threadpool);
  * @param threadpool     the threadpool of interest
  * @return integer       number of threads working
  */
-int thpool_num_threads_working(threadpool);
+int thpool_num_threads_working(threadpool)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 #ifdef __cplusplus
