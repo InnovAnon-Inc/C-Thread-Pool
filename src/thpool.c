@@ -126,19 +126,19 @@ __attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 static int  bsem_init(struct bsem *bsem_p, int value)
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  bsem_reset(struct bsem *bsem_p)
 __attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  bsem_post(struct bsem *bsem_p)
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  bsem_post_all(struct bsem *bsem_p)
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  bsem_wait(struct bsem *bsem_p)
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result)) ;
 
 
 
@@ -596,7 +596,7 @@ static int jobqueue_destroy(jobqueue* jobqueue_p){
 
 
 /* Init semaphore to 1 or 0 */
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result))
 static int bsem_init(bsem *bsem_p, int value) {
 	error_check (value < 0 || value > 1) {
 		err("bsem_init(): Binary semaphore can take only values 1 or 0");
@@ -623,7 +623,7 @@ static int bsem_reset(bsem *bsem_p) {
 
 
 /* Post to at least one thread */
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result))
 static int bsem_post(bsem *bsem_p) {
 	error_check (pthread_mutex_lock(&bsem_p->mutex) != 0) return -1;
 	bsem_p->v = 1;
@@ -634,7 +634,7 @@ static int bsem_post(bsem *bsem_p) {
 
 
 /* Post to all threads */
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result))
 static int bsem_post_all(bsem *bsem_p) {
 	error_check (pthread_mutex_lock(&bsem_p->mutex) != 0) return -1;
 	bsem_p->v = 1;
@@ -645,7 +645,7 @@ static int bsem_post_all(bsem *bsem_p) {
 
 
 /* Wait on semaphore until semaphore has value 0 */
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result))
 static int bsem_wait(bsem* bsem_p) {
 	error_check (pthread_mutex_lock(&bsem_p->mutex) != 0) return -1;
 	TODO (looks busy or optimize-able)
