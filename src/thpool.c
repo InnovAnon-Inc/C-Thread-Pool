@@ -290,7 +290,7 @@ int thpool_destroy(thpool_* thpool_p){
 	volatile int threads_total;
 
 	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wunsuffixed-float-constant"
+	#pragma GCC diagnostic ignored "-Wunsuffixed-float-constants"
 	double TIMEOUT = 1.0;
 	time_t start, end;
 	double tpassed = 0.0;
