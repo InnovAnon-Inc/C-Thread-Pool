@@ -334,7 +334,7 @@ int thpool_pause(thpool_* thpool_p) {
 
 
 /* Resume all threads in threadpool */
-__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
+__attribute__ ((leaf, nonnull (1), nothrow))
 void thpool_resume(thpool_* thpool_p) {
     /* // resuming a single threadpool hasn't been
     // implemented yet, meanwhile this supresses
