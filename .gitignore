@@ -22,6 +22,5 @@ ltmain.sh
 .libs
 *.la
 *.lo
-m4
 ar-lib
 compile

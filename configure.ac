@@ -9,7 +9,6 @@ AC_CONFIG_FILES([
  src/Makefile
 ])
 AC_CONFIG_MACRO_DIR([m4])
-AC_OUTPUT
 
 AC_CHECK_HEADERS([errno.h signal.h stdio.h stdlib.h time.h unistd.h])
 AC_CHECK_HEADERS([pthread.h])
@@ -18,3 +17,7 @@ AC_CHECK_HEADERS([glitter.h])
 AC_CHECK_LIB([pthread],[pthread_create,pthread_detach,pthread_kill])
 AC_CHECK_LIB([pthread],[pthread_mutex_init,pthread_mutex_lock,pthread_mutex_unlock])
 AC_CHECK_LIB([pthread],[pthread_cond_init,pthread_cond_wait,pthread_cond_signal,pthread_cond_broadcast])
+
+INNOVANON_WARNINGS([])
+
+AC_OUTPUT
