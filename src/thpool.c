@@ -202,19 +202,25 @@ struct thpool_* thpool_init(int num_threads){
 		return NULL;
 	}
 
-	/*if (pthread_mutex_init(&(thpool_p->thcount_lock), NULL) != 0) {
+	error_check (pthread_mutex_init(&(thpool_p->thcount_lock), NULL) != 0) {
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wunused-result"
 		jobqueue_destroy(&thpool_p->jobqueue);
+	#pragma GCC diagnostic pop
 		free(thpool_p);
 		return NULL;
-	}*/
-	thpool_p->thcount_lock = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
-	/*if (pthread_cond_init(&thpool_p->threads_all_idle, NULL) != 0) {
+	}
+	/*thpool_p->thcount_lock = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;*/
+	error_check (pthread_cond_init(&thpool_p->threads_all_idle, NULL) != 0) {
 		pthread_mutex_destroy (&(thpool_p->thcount_lock));
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wunused-result"
 		jobqueue_destroy(&thpool_p->jobqueue);
+	#pragma GCC diagnostic pop
 		free(thpool_p);
 		return NULL;
-	}*/
-	thpool_p->threads_all_idle = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
+	}
+	/*thpool_p->threads_all_idle = (pthread_cond_t) PTHREAD_COND_INITIALIZER;*/
 
 	/* Thread init */
 	for (n=0; n<num_threads; n++){
@@ -634,13 +640,13 @@ static int bsem_init(bsem *bsem_p, int value) {
 		/*exit(1);*/
 		return -1;
 	}
-	/*if (pthread_mutex_init(&(bsem_p->mutex), NULL) != 0) return -2;*/
-	bsem_p->mutex = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
-	/*if (pthread_cond_init(&(bsem_p->cond), NULL) != 0) {
+	error_check (pthread_mutex_init(&(bsem_p->mutex), NULL) != 0) return -2;
+	/*bsem_p->mutex = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;*/
+	error_check (pthread_cond_init(&(bsem_p->cond), NULL) != 0) {
 		pthread_mutex_destroy (&(bsem_p->mutex));
 		return -3;
-	}*/
-	bsem_p->cond = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
+	}
+	/*bsem_p->cond = (pthread_cond_t) PTHREAD_COND_INITIALIZER;*/
 	bsem_p->v = value;
 	return 0;
 }
