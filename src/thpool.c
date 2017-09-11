@@ -8,6 +8,10 @@
  *
  ********************************/
 
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #define _POSIX_C_SOURCE 200809L
 #include <errno.h>
 #include <signal.h>
@@ -21,7 +25,7 @@
 
 #include <pthread.h>
 
-#include "thpool.h"
+#include <thpool.h>
 
 #ifdef THPOOL_DEBUG
 #define THPOOL_DEBUG 1
