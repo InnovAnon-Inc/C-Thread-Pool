@@ -104,7 +104,7 @@ static void  thread_hold(int sig_id)
 __attribute__ (()) ;
 
 static void  thread_destroy(struct thread* thread_p)
-__attribute__ ((nonnull (1))) ;;
+__attribute__ ((nonnull (1))) ;
 
 
 
@@ -180,7 +180,10 @@ struct thpool_* thpool_init(int num_threads){
 		(size_t) num_threads * sizeof(struct thread *));
 	error_check (thpool_p->threads == NULL){
 		err("thpool_init(): Could not allocate memory for threads\n");
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wunused-result"
 		jobqueue_destroy(&thpool_p->jobqueue);
+	#pragma GCC diagnostic pop
 		free(thpool_p);
 		return NULL;
 	}
@@ -207,7 +210,10 @@ struct thpool_* thpool_init(int num_threads){
 				thread_destroy (thpool_p->threads[k]);
 			pthread_cond_destroy (&thpool_p->threads_all_idle);
 			pthread_mutex_destroy (&(thpool_p->thcount_lock));
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wunused-result"
 			jobqueue_destroy(&thpool_p->jobqueue);
+	#pragma GCC diagnostic pop
 			free(thpool_p);
 			return NULL;
 		}
