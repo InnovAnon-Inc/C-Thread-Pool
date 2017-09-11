@@ -148,6 +148,7 @@ __attribute__ ((/*leaf, */nonnull (1), nothrow, warn_unused_result)) ;
 
 
 /* Initialise thread pool */
+__attribute__ ((malloc, nothrow, warn_unused_result))
 struct thpool_* thpool_init(int num_threads){
 	thpool_* thpool_p;
 	int n;
@@ -231,6 +232,7 @@ struct thpool_* thpool_init(int num_threads){
 
 
 /* Add work to the thread pool */
+__attribute__ ((nonnull (1, 2, 3), nothrow, warn_unused_result))
 int thpool_add_work(
 	thpool_* thpool_p,
 	void (*function_p)(void*), void* arg_p) {
@@ -254,6 +256,7 @@ int thpool_add_work(
 
 
 /* Wait until all jobs have finished */
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int thpool_wait(thpool_* thpool_p){
 	error_check (pthread_mutex_lock(&thpool_p->thcount_lock) != 0) return -1;
 	TODO (this looks kinda busy or otherwise optimize-able)
@@ -269,6 +272,7 @@ int thpool_wait(thpool_* thpool_p){
 
 
 /* Destroy the threadpool */
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 int thpool_destroy(thpool_* thpool_p){
 	volatile int threads_total;
 
@@ -317,6 +321,7 @@ int thpool_destroy(thpool_* thpool_p){
 
 
 /* Pause all threads in threadpool */
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int thpool_pause(thpool_* thpool_p) {
 	int n;
 	for (n=0; n < thpool_p->num_threads_alive; n++){
@@ -329,6 +334,7 @@ int thpool_pause(thpool_* thpool_p) {
 
 
 /* Resume all threads in threadpool */
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 void thpool_resume(thpool_* thpool_p) {
     /* // resuming a single threadpool hasn't been
     // implemented yet, meanwhile this supresses
@@ -338,7 +344,7 @@ void thpool_resume(thpool_* thpool_p) {
 	threads_on_hold = 0;
 }
 
-
+__attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result))
 int thpool_num_threads_working(thpool_* thpool_p){
 	return thpool_p->num_threads_working;
 }
@@ -356,6 +362,7 @@ int thpool_num_threads_working(thpool_* thpool_p){
  * @param id            id to be given to the thread
  * @return 0 on success, -1 otherwise.
  */
+__attribute__ ((nonnull (1, 2), /*nothrow, */warn_unused_result))
 static int thread_init (
 	thpool_* thpool_p,
 	struct thread** thread_p,
@@ -381,6 +388,7 @@ static int thread_init (
 
 
 /* Sets the calling thread on hold */
+__attribute__ ((nothrow))
 static void thread_hold(int sig_id) {
     (void)sig_id;
 	threads_on_hold = 1;
@@ -399,6 +407,7 @@ static void thread_hold(int sig_id) {
 * @param  thread        thread that will run this function
 * @return nothing
 */
+__attribute__ ((nonnull (1), warn_unused_result))
 static void* thread_do(struct thread* thread_p){
 
 	/* Set thread name for profiling and debuging */
@@ -475,6 +484,7 @@ static void* thread_do(struct thread* thread_p){
 
 
 /* Frees a thread  */
+__attribute__ ((nonnull (1), nothrow))
 static void thread_destroy (thread* thread_p){
 	free(thread_p);
 }
@@ -487,6 +497,7 @@ static void thread_destroy (thread* thread_p){
 
 
 /* Initialize queue */
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int jobqueue_init(jobqueue* jobqueue_p){
 	jobqueue_p->len = 0;
 	jobqueue_p->front = NULL;
@@ -505,6 +516,7 @@ static int jobqueue_init(jobqueue* jobqueue_p){
 
 
 /* Clear the queue */
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int jobqueue_clear(jobqueue* jobqueue_p){
 	while(jobqueue_p->len){
 		struct job* j = jobqueue_pull(jobqueue_p);
@@ -522,6 +534,7 @@ static int jobqueue_clear(jobqueue* jobqueue_p){
 
 /* Add (allocated) job to queue
  */
+__attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
 static int jobqueue_push(jobqueue* jobqueue_p, struct job* newjob){
 
 	error_check (pthread_mutex_lock(&jobqueue_p->rwmutex)) return -1;
@@ -551,6 +564,7 @@ static int jobqueue_push(jobqueue* jobqueue_p, struct job* newjob){
  *
  * Notice: Caller MUST hold a mutex
  */
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static struct job* jobqueue_pull(jobqueue* jobqueue_p){
 	job* job_p;
 
@@ -582,6 +596,7 @@ static struct job* jobqueue_pull(jobqueue* jobqueue_p){
 
 
 /* Free all queue resources back to the system */
+__attribute__ ((nonnull (1), nothrow, warn_unused_result))
 static int jobqueue_destroy(jobqueue* jobqueue_p){
 	error_check (jobqueue_clear(jobqueue_p) != 0) return -1;
 	free(jobqueue_p->has_jobs);
