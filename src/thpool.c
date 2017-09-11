@@ -94,22 +94,51 @@ typedef struct thpool_{
 /* ========================== PROTOTYPES ============================ */
 
 
-static int  thread_init(thpool_* thpool_p, struct thread** thread_p, int id);
-static void* thread_do(struct thread* thread_p);
-static void  thread_hold(int sig_id);
-static void  thread_destroy(struct thread* thread_p);
+static int   thread_init(thpool_* thpool_p, struct thread** thread_p, int id)
+__attribute__ ((nonnull (1, 2), warn_unused_result)) ;
 
-static int   jobqueue_init(jobqueue* jobqueue_p);
-static int  jobqueue_clear(jobqueue* jobqueue_p);
-static int  jobqueue_push(jobqueue* jobqueue_p, struct job* newjob_p);
-static struct job* jobqueue_pull(jobqueue* jobqueue_p);
-static int  jobqueue_destroy(jobqueue* jobqueue_p);
+static void* thread_do(struct thread* thread_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
-static int  bsem_init(struct bsem *bsem_p, int value);
-static int  bsem_reset(struct bsem *bsem_p);
-static int  bsem_post(struct bsem *bsem_p);
-static int  bsem_post_all(struct bsem *bsem_p);
-static int  bsem_wait(struct bsem *bsem_p);
+static void  thread_hold(int sig_id)
+__attribute__ (()) ;
+
+static void  thread_destroy(struct thread* thread_p)
+__attribute__ ((nonnull (1))) ;;
+
+
+
+static int  jobqueue_init(jobqueue* jobqueue_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  jobqueue_clear(jobqueue* jobqueue_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  jobqueue_push(jobqueue* jobqueue_p, struct job* newjob_p)
+__attribute__ ((nonnull (1, 2), warn_unused_result)) ;
+
+static struct job* jobqueue_pull(jobqueue* jobqueue_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  jobqueue_destroy(jobqueue* jobqueue_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+
+
+static int  bsem_init(struct bsem *bsem_p, int value)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  bsem_reset(struct bsem *bsem_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  bsem_post(struct bsem *bsem_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  bsem_post_all(struct bsem *bsem_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
+
+static int  bsem_wait(struct bsem *bsem_p)
+__attribute__ ((nonnull (1), warn_unused_result)) ;
 
 
 
