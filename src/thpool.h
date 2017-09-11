@@ -37,7 +37,7 @@ typedef struct thpool_* threadpool;
  *                       NULL on error
  */
 threadpool thpool_init(int num_threads)
-__attribute__ ((malloc, warn_unused_result)) ;
+__attribute__ ((malloc, nothrow, warn_unused_result)) ;
 
 
 /**
@@ -68,7 +68,7 @@ __attribute__ ((malloc, warn_unused_result)) ;
  * @return 0 on successs, -1 otherwise.
  */
 int thpool_add_work(threadpool, void (*function_p)(void*), void* arg_p)
-__attribute__ ((nonnull (1, 2), warn_unused_result)) ;
+__attribute__ ((nonnull (1, 2), nothrow, warn_unused_result)) ;
 
 
 /**
@@ -99,7 +99,7 @@ __attribute__ ((nonnull (1, 2), warn_unused_result)) ;
  * @return nothing
  */
 int thpool_wait(threadpool)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
 
 
 /**
@@ -124,7 +124,7 @@ __attribute__ ((nonnull (1), warn_unused_result)) ;
  * @return nothing
  */
 int thpool_pause(threadpool)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result)) ;
 
 
 /**
@@ -141,7 +141,7 @@ __attribute__ ((nonnull (1), warn_unused_result)) ;
  * @return nothing
  */
 void thpool_resume(threadpool)
-__attribute__ ((nonnull (1))) ;
+__attribute__ ((leaf, nonnull (1), nothrow)) ;
 
 
 /**
@@ -164,7 +164,7 @@ __attribute__ ((nonnull (1))) ;
  * @return nothing
  */
 int thpool_destroy(threadpool)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 
 /**
@@ -186,7 +186,7 @@ __attribute__ ((nonnull (1), warn_unused_result)) ;
  * @return integer       number of threads working
  */
 int thpool_num_threads_working(threadpool)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((leaf, nonnull (1), nothrow, pure, warn_unused_result)) ;
 
 
 #ifdef __cplusplus

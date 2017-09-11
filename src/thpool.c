@@ -101,27 +101,27 @@ static void* thread_do(struct thread* thread_p)
 __attribute__ ((nonnull (1), warn_unused_result)) ;
 
 static void  thread_hold(int sig_id)
-__attribute__ (()) ;
+__attribute__ ((nothrow)) ;
 
 static void  thread_destroy(struct thread* thread_p)
-__attribute__ ((nonnull (1))) ;
+__attribute__ ((nonnull (1), nothrow)) ;
 
 
 
 static int  jobqueue_init(jobqueue* jobqueue_p)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  jobqueue_clear(jobqueue* jobqueue_p)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  jobqueue_push(jobqueue* jobqueue_p, struct job* newjob_p)
-__attribute__ ((nonnull (1, 2), warn_unused_result)) ;
+__attribute__ ((nonnull (1, 2), nothrow, warn_unused_result)) ;
 
 static struct job* jobqueue_pull(jobqueue* jobqueue_p)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 static int  jobqueue_destroy(jobqueue* jobqueue_p)
-__attribute__ ((nonnull (1), warn_unused_result)) ;
+__attribute__ ((nonnull (1), nothrow, warn_unused_result)) ;
 
 
 
@@ -232,7 +232,7 @@ struct thpool_* thpool_init(int num_threads){
 
 
 /* Add work to the thread pool */
-__attribute__ ((nonnull (1, 2, 3), nothrow, warn_unused_result))
+__attribute__ ((nonnull (1, 2), nothrow, warn_unused_result))
 int thpool_add_work(
 	thpool_* thpool_p,
 	void (*function_p)(void*), void* arg_p) {
