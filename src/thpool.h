@@ -11,6 +11,8 @@
 extern "C" {
 #endif
 
+#include <glitter.h>
+
 /* =================================== API ======================================= */
 
 
@@ -184,4 +186,4 @@ int thpool_num_threads_working(threadpool);
 }
 #endif
 
-#endif
+#endif /* _THPOOL_ */
