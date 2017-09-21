@@ -1,15 +1,19 @@
-/* 
+/*
  * WHAT THIS EXAMPLE DOES
- * 
- * We create a pool of 4 threads and then add 40 tasks to the pool(20 task1 
+ *
+ * We create a pool of 4 threads and then add 40 tasks to the pool(20 task1
  * functions and 20 task2 functions). task1 and task2 simply print which thread is running them.
- * 
- * As soon as we add the tasks to the pool, the threads will run them. It can happen that 
+ *
+ * As soon as we add the tasks to the pool, the threads will run them. It can happen that
  * you see a single thread running all the tasks (highly unlikely). It is up the OS to
  * decide which thread will run what. So it is not an error of the thread pool but rather
  * a decision of the OS.
- * 
+ *
  * */
+
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include <stdio.h>
 #include <pthread.h>
@@ -27,7 +31,7 @@ void task2(){
 
 
 int main(){
-	
+
 	puts("Making threadpool with 4 threads");
 	threadpool thpool = thpool_init(4);
 
@@ -40,6 +44,6 @@ int main(){
 
 	puts("Killing threadpool");
 	thpool_destroy(thpool);
-	
+
 	return 0;
 }

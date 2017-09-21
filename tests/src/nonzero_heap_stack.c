@@ -1,3 +1,7 @@
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 /*
  * Try to run thpool with a non-zero heap and stack
  */
@@ -51,6 +55,6 @@ int main(){
 
 	puts("Killing threadpool");
 	thpool_destroy(thpool);
-	
+
 	return 0;
 }
