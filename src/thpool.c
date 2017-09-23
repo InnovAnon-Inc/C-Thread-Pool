@@ -223,6 +223,8 @@ struct thpool_* thpool_init(int num_threads){
 	/*thpool_p->threads_all_idle = (pthread_cond_t) PTHREAD_COND_INITIALIZER;*/
 
 	/* Thread init */
+	TODO (move for-k-loop out of here)
+	#pragma GCC ivdep
 	for (n=0; n<num_threads; n++){
 		error_check (thread_init(thpool_p, &thpool_p->threads[n], n) != 0) {
 			int k;
@@ -333,6 +335,7 @@ int thpool_destroy(thpool_* thpool_p){
 	/* Job queue cleanup */
 	error_check (jobqueue_destroy(&thpool_p->jobqueue) != 0) return -5;
 	/* Deallocs */
+	#pragma GCC ivdep
 	for (n=0; n < threads_total; n++){
 		thread_destroy(thpool_p->threads[n]);
 	}
@@ -346,6 +349,7 @@ int thpool_destroy(thpool_* thpool_p){
 __attribute__ ((leaf, nonnull (1), nothrow, warn_unused_result))
 int thpool_pause(thpool_* thpool_p) {
 	int n;
+	#pragma GCC ivdep
 	for (n=0; n < thpool_p->num_threads_alive; n++){
 		error_check (pthread_kill(
 			thpool_p->threads[n]->pthread, SIGUSR1) != 0)

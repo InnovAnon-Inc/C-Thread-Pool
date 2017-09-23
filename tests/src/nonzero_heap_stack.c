@@ -28,11 +28,13 @@ void nonzero_heap(){
     int i;
     void *ptrs[200];
 
+	#pragma GCC ivdep
     for (i=0; i<200; i++){
         ptrs[i] = malloc((i+1) << 4);
         if (ptrs[i])
             memset(ptrs[i], 0x80, (i+1) << 4);
     }
+	#pragma GCC ivdep
     for (i=0; i<200; i++){
         free(ptrs[i]);
     }
