@@ -5,4 +5,4 @@ include_HEADERS = thpool.h
 #libthpool_la_CFLAGS =
 
 AM_CPPFLAGS = -D__STDC_INT64__
-AM_CPPFLAGS += -I $(srcdir)/glitter/src
+AM_CPPFLAGS += -I $(srcdir)/../glitter/src
