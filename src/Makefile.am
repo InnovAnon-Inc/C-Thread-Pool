@@ -7,5 +7,5 @@ include Makefile-LIBADD.inc
 
 lib_LTLIBRARIES = libthpool.la
 libthpool_la_SOURCES = thpool.c
-libthpool_la_LIBADD = $(LIBTHIPE_LIBADD)
+libthpool_la_LIBADD = $(LIBTHPOOL_LIBADD)
 include_HEADERS = thpool.h
