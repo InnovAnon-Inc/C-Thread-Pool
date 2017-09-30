@@ -3,7 +3,7 @@ AM_CPPFLAGS = -D__STDC_INT64__
 SUBDIRS = ../glitter
 AM_CPPFLAGS += -I $(top_srcdir)/glitter/src
 
-LIBTHPOOL_LIBADD = -lpthread
+include Makefile-LIBADD.inc
 
 lib_LTLIBRARIES = libthpool.la
 libthpool_la_SOURCES = thpool.c
