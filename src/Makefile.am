@@ -1,7 +1,7 @@
 AM_CPPFLAGS = -D__STDC_INT64__
 
 SUBDIRS = ../glitter
-AM_CPPFLAGS += -I ../glitter/src
+AM_CPPFLAGS += -I $(top_srcdir)/glitter/src
 
 LIBTHPOOL_LIBADD = -lpthread
 
