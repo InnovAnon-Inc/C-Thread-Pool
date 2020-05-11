@@ -15,7 +15,7 @@ AC_ARG_ENABLE([use-submodules],
 AM_CONDITIONAL([USE_SUBMODULES], [test x"$enable_use_submodules" = "xyes"])
 
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_SUBDIRS([glitter])
+#AC_CONFIG_SUBDIRS([glitter])
 
 AC_CHECK_HEADERS([errno.h signal.h stdio.h stdlib.h time.h unistd.h])
 AC_CHECK_HEADERS([pthread.h])
