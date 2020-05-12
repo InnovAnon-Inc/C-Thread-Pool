@@ -10,5 +10,6 @@ dist_bin_SCRIPTS = libthpool_config
 
 lib_LTLIBRARIES = libthpool.la
 libthpool_la_SOURCES = thpool.c
-libthpool_la_LIBADD = $(LIBTHPOOL_LIBADD)
+#libthpool_la_LIBADD = $(LIBTHPOOL_LIBADD)
+libthpool_la_LIBADD = @LIBTHPOOL_LIBADD@
 include_HEADERS = thpool.h
