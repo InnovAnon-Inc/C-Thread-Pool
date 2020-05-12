@@ -1,1 +1,0 @@
-LIBTHPOOL_LIBADD = -lpthread
