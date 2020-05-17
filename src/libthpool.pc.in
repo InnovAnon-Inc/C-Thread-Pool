@@ -1,0 +1,15 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+#thpool_utility=thpool-test
+
+Name: @PACKAGE_NAME@
+Description: C-Thread-Pool (thpool) library
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lthpool
+Cflags: -I${includedir}
+Requires: glitter
+Requires.private:
+

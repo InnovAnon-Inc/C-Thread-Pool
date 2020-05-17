@@ -8,28 +8,28 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([
  Makefile
  src/Makefile
+ src/thpool.pc.in
 ])
+
+PKG_PROG_PKG_CONFIG
 
 AC_ARG_ENABLE([use-submodules],
     AS_HELP_STRING([--enable-use-submodules], [Enable use submodules]))
 AM_CONDITIONAL([USE_SUBMODULES], [test x"$enable_use_submodules" = "xyes"])
 
 AC_CONFIG_MACRO_DIR([m4])
-#AC_CONFIG_SUBDIRS([glitter])
 
 AC_CHECK_HEADERS([errno.h signal.h stdio.h stdlib.h time.h unistd.h])
 AC_CHECK_HEADERS([pthread.h])
-AC_CHECK_HEADERS([glitter.h])
+#AC_CHECK_HEADERS([glitter.h])
 
 AC_CHECK_LIB([pthread],[pthread_create,pthread_detach,pthread_kill])
 AC_CHECK_LIB([pthread],[pthread_mutex_init,pthread_mutex_lock,pthread_mutex_unlock])
 AC_CHECK_LIB([pthread],[pthread_cond_init,pthread_cond_wait,pthread_cond_signal,pthread_cond_broadcast])
 
-#srcdir = @srcdir@
-#LIBTHPOOL_LIBADD="`PATH=$(srcdir)src:$PATH libthpool_config --libs`"
-LIBTHPOOL_LIBADD="`PATH=src:$PATH libthpool_config --libs`"
-AC_SUBST(LIBTHPOOL_LIBADD)
+PKG_CHECK_MODULES([GLITTER],[glitter],,)
 
 INNOVANON_WARNINGS([])
 
 AC_OUTPUT
+
