@@ -11,5 +11,7 @@ Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lthpool
 Cflags: -I${includedir}
 Requires: glitter
-Requires.private: -lpthread
+#Requires.private: -lpthread
+Requires.private:
+Libs.private: -lpthread
 
