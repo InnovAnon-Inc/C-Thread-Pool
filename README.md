@@ -1,3 +1,22 @@
+# C Thread Pool
+Now using autotools, so this can be easily leveraged in more projects.
+==========
+[![CircleCI](https://img.shields.io/circleci/build/github/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://circleci.com/gh/InnovAnon-Inc/C-Thread-Pool)
+[![Repo Size](https://img.shields.io/github/repo-size/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://github.com/InnovAnon-Inc/C-Thread-Pool)
+[![LoC](https://tokei.rs/b1/github/InnovAnon-Inc/C-Thread-Pool?category=code)](https://github.com/InnovAnon-Inc/C-Thread-Pool)
+[![CodeFactor](https://www.codefactor.io/repository/github/InnovAnon-Inc/C-Thread-Pool/badge)](https://www.codefactor.io/repository/github/InnovAnon-Inc/C-Thread-Pool)
+
+[![Latest Release](https://img.shields.io/github/commits-since/InnovAnon-Inc/C-Thread-Pool/latest?color=%23FF1100&include_prereleases&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://github.com/InnovAnon-Inc/C-Thread-Pool/releases/latest)
+![Dependencies](https://img.shields.io/librariesio/github/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&style=plastic)
+
+[![License Summary](https://img.shields.io/github/license/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&label=Free%20Code%20for%20a%20Free%20World%21&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://tldrlegal.com/license/mit#summary)
+
+![Corporate Logo](https://i.imgur.com/UD8y4Is.gif)
+
+
+
+# Original README
+----------
 ![Build status](http://178.62.170.124:3000/pithikos/c-thread-pool/badge/?branch=master)
 
 # C Thread Pool
