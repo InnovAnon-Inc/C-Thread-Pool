@@ -1,6 +1,7 @@
 # C Thread Pool
 Now using autotools, so this can be easily leveraged in more projects.
 ==========
+
 [![CircleCI](https://img.shields.io/circleci/build/github/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://circleci.com/gh/InnovAnon-Inc/C-Thread-Pool)
 [![Repo Size](https://img.shields.io/github/repo-size/InnovAnon-Inc/C-Thread-Pool?color=%23FF1100&logo=InnovAnon%2C%20Inc.&logoColor=%23FF1133&style=plastic)](https://github.com/InnovAnon-Inc/C-Thread-Pool)
 [![LoC](https://tokei.rs/b1/github/InnovAnon-Inc/C-Thread-Pool?category=code)](https://github.com/InnovAnon-Inc/C-Thread-Pool)
@@ -17,6 +18,7 @@ Now using autotools, so this can be easily leveraged in more projects.
 
 # Original README
 ----------
+
 ![Build status](http://178.62.170.124:3000/pithikos/c-thread-pool/badge/?branch=master)
 
 # C Thread Pool
